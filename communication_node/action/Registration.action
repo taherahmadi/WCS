@@ -1,0 +1,8 @@
+#goal definition
+string robot_namespace
+---
+#result definition
+string[] robots_list
+---
+#feedback
+string status

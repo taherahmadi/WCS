@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<launch>
+
+
+
+<include file="$(find setup)/launch/p3at_hmapping.launch">
+      <arg name="robotname" value="robot1"/>
+</include>
+<include file="$(find setup)/launch/p3at_move_base.launch">
+      <arg name="robotname" value="robot1"/>
+</include>
+<include file="$(find setup)/launch/p3at_hmapping.launch">
+      <arg name="robotname" value="robot2"/>
+</include>
+<include file="$(find setup)/launch/p3at_move_base.launch">
+      <arg name="robotname" value="robot2"/>
+</include>
+
+<include file="$(find setup)/launch/p3at_hmapping.launch">
+      <arg name="robotname" value="robot3"/>
+</include>
+<include file="$(find setup)/launch/p3at_move_base.launch">
+      <arg name="robotname" value="robot3"/>
+</include>
+<include file="$(find setup)/launch/p3at_hmapping.launch">
+      <arg name="robotname" value="robot4"/>
+</include>
+<include file="$(find setup)/launch/p3at_move_base.launch">
+      <arg name="robotname" value="robot4"/>
+</include>
+
+
+
+
+</launch>

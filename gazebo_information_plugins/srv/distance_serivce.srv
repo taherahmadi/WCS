@@ -1,0 +1,6 @@
+string command
+string robot1
+string robot2
+---
+float32 distance
+int32 number_of_objects

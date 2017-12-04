@@ -1,0 +1,18 @@
+
+#
+# pub=None;
+#
+# def main():
+#    i=0;
+#    while not rospy.is_shutdown():
+#          a=String(str(i));
+#          if i<4  or i  >7:
+#              pub.publish(a)
+#              print(i)
+#          i+=1;
+#          rospy.sleep(1);
+#
+# rospy.init_node("test_publisher")
+# pub = rospy.Publisher('hello', String, queue_size=100);
+# main();
+# rospy.spin();
