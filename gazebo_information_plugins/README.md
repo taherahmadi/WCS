@@ -1,7 +1,6 @@
-#IMPORTANT
- first delet the gazebo_information_plugins package 
- and then rename this package to gazebo_information_plugins
- after that you can catkin_make the package and compile it
+
+IMPORTANT
+this package works with gazebo 7
 
 
 
