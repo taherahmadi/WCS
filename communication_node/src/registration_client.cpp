@@ -2,7 +2,6 @@
 #include <actionlib/client/simple_action_client.h>
 #include <actionlib/client/terminal_state.h>
 #include <communication_node/RegistrationAction.h>
-
 int main(int argc, char **argv)
 {
   ros::init(argc, argv, "test_registration");

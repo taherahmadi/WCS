@@ -1,8 +1,7 @@
 /* world plugin
 
-# Authors:  Mohammad Hossein Gohari Nejad <mhgoharinejad@gmail.com>
-# License:  BSD 3 clause
-
+ Authors:  MohammadHossein GohariNejad <hoseingohari76@gmail.com>
+ License:  BSD 3 clause
 
 */
 #include <gazebo/common/Plugin.hh>
@@ -19,27 +18,41 @@
 #include <math.h>
 #include <nav_msgs/OccupancyGrid.h>
 #include <std_msgs/String.h>
-
+#define NUM_SRV 4 // this is the number of serivceservers we want to create
 
 namespace gazebo {
-    class WorldPluginTutorial : public WorldPlugin {
+    class WorldPluginTutorial ;
+    class service_handle{
+          /*  this class is a wrapper around a ros ServiceServer and its handler function
+              for every server we create one object of this class;
+             */
     public:
-        physics::WorldPtr _world;
-        ros::NodeHandle n;
+      WorldPluginTutorial* WPT; // this is a pointer to the wold plugin so we can use it's methodes
+      std::string sn; //this is the name of the service we want to create
+      ros::ServiceServer service1; //this is the serviceserver object we want to create
+      service_handle(std::string service_name,WorldPluginTutorial* world_plugin); // this is the constructor for the class
+      bool service_handler1(gazebo_information_plugins::distance_serivce::Request &req,
+                           gazebo_information_plugins::distance_serivce::Response &res);// this function is the handler for the requests received by the serviceserver
+     };
+    class WorldPluginTutorial : public WorldPlugin {
+      //this class is the plugin that we create it has to inheres from WorldPlugin class
+      // and then we have to overload the load function inhered from WorldPlugin class
+    public:
+        physics::WorldPtr _world; // this is a pointer to the world object used by gazebo engine
+        ros::NodeHandle n;  // a ros nodehandle
         ros::Subscriber map_subscriber;
-        ros::ServiceServer service;
-        std::vector<std::string> vec;
+      //  ros::ServiceServer service1,service2,service3,service4;
+        std::vector<std::string> vec; // a vector to keep the unique objects when counting number of walls between two objects
+        std::vector<service_handle*> vec_srv; // a vector to keep pointer to  the objects of type service_handle
         std::string object_name;
-        int check;
+        int check; // a flag variable indicating that we want to save the data received from contact sensor
 
         WorldPluginTutorial() : WorldPlugin() {}
 
-      double get_Temperature(){return _world->Atmosphere ().Temperature(0.0);}
-      double get_Pressure(){return _world->Atmosphere ().Pressure(0.0);}
-    //TODO    ignition::math::Vector3d get_Magnetic_Field(){return _world->MagneticField(); }
 
         int get_walls(std::string robot_name1, std::string robot_name2) {
-
+            // this function returns number of walls between robot_name1 and robot_name2 as Integer
+            //if the robot_name1 or robot_name2 are not name for models in the world this function returns -1
             physics::ModelPtr model1, model2;
             model1 = _world->GetModel(robot_name1);
             model2 = _world->GetModel(robot_name2);
@@ -86,13 +99,15 @@ namespace gazebo {
             int number_of_walls = vec.size() - 2;
             check = 0;
             vec.clear();
-            math::Pose new_test_pose(0.0, 0.0, 90.0, 0, 0, 0);
+            math::Pose new_test_pose(200.0, 200.0, 10.0, 0, 0, 0);
             _world->GetModel(test_object)->SetWorldPose(new_test_pose);
             return number_of_walls;
 
         }
 
         float get_distance(std::string robot_name1, std::string robot_name2) {
+             //this function returns the distance between robot_name1 and robot_name2 as float
+             // if the robot_name1 or robot_name2 are not valid models this function returns -1
             physics::ModelPtr model1, model2;
             model1 = _world->GetModel(robot_name1);
             model2 = _world->GetModel(robot_name2);
@@ -110,6 +125,9 @@ namespace gazebo {
         }
 
         void Load(physics::WorldPtr _parent, sdf::ElementPtr _sdf) {
+           //this function is inhered from WorldPlugin reference class and we have to override it
+           // when the gazebo enging starts and this plugin loads this function is automatically RECALLED
+           // _parent is a pointer to the world object used by gazebo engine
 
             check = 0;
             // Make sure the ROS node for Gazebo has already been initialized
@@ -119,18 +137,18 @@ namespace gazebo {
                 return;
             }
             _world = _parent;
-            _world->Atmosphere();
             ROS_INFO("Hello World!");
             ROS_INFO("Hello World!");
 
             ROS_INFO("Hello World!");
 
-
+            //here we create a SDF object with a contact sensor attached to it and insert it into the world
+            // to count the number of objects that this SDF object touches
             sdf::SDF sphereSDF;
             sphereSDF.SetFromString(
                     "<sdf version ='1.4'>\
         <model name ='test_sphere'>\
-        <pose>-10 -12 0.2 0 0 0</pose>\
+        <pose>-100 -120 0.2 0 0 0</pose>\
         <link name ='link'>\
         <sensor name='my_contact' type='contact'>\
         <plugin name='my_plugin' filename='libgazebo_plugin_contact.so'/>\
@@ -158,21 +176,17 @@ namespace gazebo {
             _world->InsertModelSDF(sphereSDF);
             ROS_INFO("Hello World!");
 
-            //ros::WallDuration(15.0).sleep();
 
-            //std::string asfj="asphalt_plane";
-            //std::string hi=_world->GetModel(asfj)->GetName();
-            //ROS_INFO("%s",hi.c_str());
-            //ROS_INFO("%f",_world->GetModel(1)->GetWorldPose().pos.x );
-            //ROS_INFO("%f",get_distance("asphalt_plane","asphalt_plane_1"));
-            //math::Pose asdfjk(20,20,0,0,0,0);
-            //_world->GetModel(asfj)->SetWorldPose(asdfjk);
-            //boost::bind(&MoveBase::goalCB, this, _1)
             int argc = 0;
             char **argv = NULL;
+            // we create a ros node to be able to set up services
             ros::init(argc, argv, "gazebo_client", ros::init_options::NoSigintHandler);
-            service = n.advertiseService("GzInfo_service", &WorldPluginTutorial::service_handler, this);
-            std::string subscribing_topic = "collision_topic";//move_base/local_costmap/costmap";
+            for (int i=0;i<NUM_SRV;i++){
+              // we create objects of type service_handle and push them into vec_src
+              vec_srv.push_back(new service_handle("GzInfo_service"+(std::to_string(i)),this));
+            };
+
+            std::string subscribing_topic = "collision_topic";
             map_subscriber = n.subscribe(subscribing_topic, 10, &WorldPluginTutorial::collision_callback, this);
 
         }
@@ -190,37 +204,45 @@ namespace gazebo {
                 }
 
             }
-            //ROS_INFO("%s",object_name.data.c_str());
         }
-
-        bool service_handler(gazebo_information_plugins::distance_serivce::Request &req,
-                             gazebo_information_plugins::distance_serivce::Response &res) {
-
-            std::string command = req.command, robot1 = req.robot1, robot2 = req.robot2;
-            if (command == "distance") {
-                res.distance = get_distance(robot1, robot2);
-                res.number_of_objects = 0;
-            } else if (command == "walls") {
-                res.distance = get_distance(robot1, robot2);
-                res.number_of_objects = get_walls(robot1, robot2);
-            }
-            else if (command == "temp") {
-                res.distance = get_Temperature()-273;
-                res.number_of_objects = 0;
-            }
-            else if (command == "pressure") {
-                res.distance = get_Pressure();
-                res.number_of_objects = 0;
-            }
-        /*TODO   else if (command == "magnet") {
-                res.distance = get_distance(robot1, robot2);
-                res.number_of_objects = get_walls(robot1, robot2);
-            } */
-            return true;
-        }
-
 
     };
 
-    GZ_REGISTER_WORLD_PLUGIN(WorldPluginTutorial)
+
+
+    service_handle::service_handle(std::string service_name,WorldPluginTutorial* world_plugin){
+                // this is the constructor for the service_handle class
+                // service_name is the name of the serviceserver we want to create
+                // world_plugin is a pointer to the object of this plugin we have created
+               sn=service_name;
+               WPT=world_plugin;
+                 service1 = (WPT->n).advertiseService(sn, &service_handle::service_handler1, this);
+    };
+    bool service_handle::service_handler1(gazebo_information_plugins::distance_serivce::Request &req,
+                         gazebo_information_plugins::distance_serivce::Response &res) {
+        //this is the handler function for the serviceserver we have created
+        // req is the reference to the object of request we have recived from a client
+        // res is the reference to the object of response that we have to complete and send back to the client
+        std::string command = req.command, robot1 = req.robot1, robot2 = req.robot2;
+        if (command == "distance") {
+            res.distance = WPT->get_distance(robot1, robot2);
+            res.number_of_objects = 0;
+        } else if (command == "walls") {
+            res.distance = WPT->get_distance(robot1, robot2);
+            res.number_of_objects = WPT->get_walls(robot1, robot2);
+        }
+        else if (command == "temp") {
+            res.distance = 0;
+            res.number_of_objects = 0;
+        }
+        else if (command == "pressure") {
+            res.distance = 0;
+            res.number_of_objects = 0;
+        }
+
+        return true;
+    };
+
+    // we register the plugin class we have created with the gazebo
+    GZ_REGISTER_WORLD_PLUGIN(WorldPluginTutorial);
 }
