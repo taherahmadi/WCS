@@ -2,3 +2,6 @@
 
 # python waste
 *.pyc
+
+# src cmakelist
+/CMakeLists.txt
