@@ -3,7 +3,7 @@
 
   <param name="log_file" type="string" value="results1"/>
   <param name="debuger_mode" type="boolean" value="True"/>
-    <node pkg="communication_node" type="message_handler_experimental.py" name="message_handler" output="screen" />
+    <node pkg="communication_node" type="message_handler.py" name="message_handler" output="screen" />
 
 
 </launch>

@@ -2,16 +2,17 @@
 
 import rospy
 from messenger_api import *
-from communication_node.msg import Data_Position
+from communication_node.msg import *
+from sample_packge.msg import *
 
 a=None
 def callback(data):
 
-    print ("new message",data.command)
+    print ("new message",data.data.a,data.data.b,data.data.c)
 
 def main():
     global a;
-    a=receive_message("robot2", Data_Position, "pose",callback)
+    a=receive_message("robot2", Data_sample, "sample",callback)
 
 
 if __name__ == "__main__":

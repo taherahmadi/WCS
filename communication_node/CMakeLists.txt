@@ -16,6 +16,7 @@ find_package(catkin REQUIRED COMPONENTS
   sensor_msgs
   std_msgs
   nav_msgs
+
 )
 
 ## System dependencies are found with CMake's conventions
@@ -56,9 +57,8 @@ add_message_files(FILES
   Data_Image.msg
   Data_Position.msg
   Data_Map.msg
-  Data_MtA.msg
-  Data_AtM.msg
   Data_Odom.msg
+  Data_sample.msg
 )
 
 ## Generate services in the 'srv' folder
@@ -88,7 +88,7 @@ add_action_files(
 
 generate_messages(
   DEPENDENCIES
-  actionlib_msgs   std_msgs sensor_msgs  nav_msgs aut_exploration
+  actionlib_msgs sample_package std_msgs sensor_msgs  nav_msgs 
 )
 
 
