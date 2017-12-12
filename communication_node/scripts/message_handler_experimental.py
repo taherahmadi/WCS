@@ -41,15 +41,15 @@ def on_exit(*args):
     sys.exit(0)
 
 class message_handle:
-        """
-        this class is wrapper around a ros publisher and a ros subscriber
-        and a callback function for the ros rossubscirber
-        for each data type given to the this script through launch file or
-        parameter server this script will create an object to
-        handle messages of that type
-        """
+    """
+    this class is wrapper around a ros publisher and a ros subscriber
+    and a callback function for the ros rossubscirber
+    for each data type given to the this script through launch file or
+    parameter server this script will create an object to
+    handle messages of that type
+    """
 
-    def _init_(self,sub_topic="",pub_topic="",data_type=None,tag="",alt_type=None):
+    def __init__(self,sub_topic="",pub_topic="",data_type=None,tag="",alt_type=None):
             """this is the constructor function for message_handle class
             :parameter
             sub_topic : string, the prefix for the subscribing topic
@@ -62,13 +62,13 @@ class message_handle:
             ----------
             subscribes from /"sub_topic"+"tag"
             """
-        self.sub_topic=subs_topic;
-        self.pub_topic="";
-        self.data_type=data_type;
-        self.alt_type=alt_type;
-        self.tag=tag;
-        self.subscriber=rospy.Subscriber(self.sub_topic+self.tag,self.data_type, self.callback_function,queue_size=50);
-        self.message_publisher=None;
+            self.sub_topic=sub_topic;
+            self.pub_topic=pub_topic;
+            self.data_type=data_type;
+            self.alt_type=alt_type;
+            self.tag=tag;
+            self.subscriber=rospy.Subscriber(self.sub_topic+self.tag,self.data_type, self.callback_function,queue_size=50);
+            self.message_publisher=None;
 
     def callback_function(self,data):
             """this is the callback function for self.subscriber
@@ -83,18 +83,22 @@ class message_handle:
             global propagation_parameters
             # TODO handle for different message types
             # TODO prop_model = data.prop_model
-            print("new "+tag+" received")
+            print("new "+self.tag+" received")
+            robots_list=rospy.get_param("/robots_list")
+            if (data.destination not in robots_list) or ( data.source not in robots_list):
+                print ("unregistered robot")
+                return
             prop_model = '1sm'
             if prop_model == '1sm':
                 # distance = get_object_distance("pioneer3at", "Dumpster")
                 distance = get_object_distance(data.destination, data.source)
-                print (type(distance),tag)
+                print (type(distance),self.tag)
                 while (distance==None):
                     distance = get_object_distance(data.destination, data.source)
                 result = one_slope_model_checker(distance=distance,decay_factor=propagation_parameters["decay_factor"],l0=propagation_parameters["l0"],threshold=propagation_parameters["threshold"])
                 if result:
                     if (self.alt_type!=None):
-                       self.message_publisher = rospy.Publisher(data.source + self.pub_topic, self.alt_type, queue_size=10)
+                       self.message_publisher = rospy.Publisher(data.destination + self.pub_topic, self.alt_type, queue_size=10)
                        i=0
                        while not ( rospy.is_shutdown() or i>1):
                                  self.message_publisher.publish(data.data)
@@ -102,7 +106,7 @@ class message_handle:
                                  rate.sleep()
                        i=0
                     else:
-                       self.message_publisher = rospy.Publisher(data.source + self.pub_topic, self.data_type, queue_size=10)
+                       self.message_publisher = rospy.Publisher(data.destination + self.pub_topic, self.data_type, queue_size=10)
                        i=0
                        while not ( rospy.is_shutdown() or i>1):
                                  self.message_publisher.publish(data)
@@ -150,9 +154,9 @@ def listener():
          information_logger.write("\n This is the result of test on "+strftime("%Y-%m-%d %H:%M:%S", gmtime()) + " GMT time \n")
          information_logger.write("propagation parameters===>>>"+" [decay_factor="+str(propagation_parameters["decay_factor"])+" ]--[ l0="+str(propagation_parameters["l0"])+"]--[ threshold="+str(propagation_parameters["threshold"])+ "]\n")
          information_logger.write("Type-------Source-----Destination---------Distance----------Outcome\n");
-    message_list=[["/message_server_","/inbox_MtA",Data_MtA,"MtA"],["/message_server_","/inbox_AtM",Data_AtM,"AtM"],["/message_server_","/g_map",Data_Map,"map",alt_type=OccupancyGrid],["/message_server_","/inbox_Odom",Data_Odom,"Odom"]];
+    message_list=[["/message_server_","/inbox_MtA",Data_MtA,"MtA",None],["/message_server_","/inbox_AtM",Data_AtM,"AtM",None],["/message_server_","/g_map",Data_Map,"map",alt_type=OccupancyGrid],["/message_server_","/inbox_Odom",Data_Odom,"Odom",None]];
     for i in range (0,len(message_list)):
-        message_handlers_list.append(message_handle(message_list[i][0],message_list[i][1],message_list[i][2],message_list[i][3]));
+        message_handlers_list.append(message_handle(message_list[i][0],message_list[i][1],message_list[i][2],message_list[i][3],message_list[i][4]));
     signal.signal(signal.SIGINT, on_exit)
     signal.signal(signal.SIGTERM, on_exit)
     rospy.spin()

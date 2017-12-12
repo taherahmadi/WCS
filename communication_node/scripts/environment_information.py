@@ -16,17 +16,17 @@ from gazebo_information_plugins.srv import *
 
 
 class GetInfo:
-        """ this class is a wrapper around a client for rosservice and a call back
-        function for the responses received from the service
+    """ this class is a wrapper around a client for rosservice and a call back
+    function for the responses received from the service
 
 
-        """
+    """
     def __init__(self,service_name=""):
-            """  this is the constructor for the GetInfo class
-            :parameter
-            service_name : string, allowed values = name of the service with the type "distance_serivce"
-            ---------
-            """
+        """  this is the constructor for the GetInfo class
+        :parameter
+        service_name : string, allowed values = name of the service with the type distance_serivce
+        ---------
+        """
         rospy.wait_for_service(service_name)
         try:
                 self.client=rospy.ServiceProxy(service_name, distance_serivce)
@@ -35,17 +35,17 @@ class GetInfo:
                 print ("connecting to gazebo ", service_name , " failed")
 
     def request_func(self, command="walls", robot1="robot1", robot2="robot2"):
-            """sends a request to the gazebo server for information
-            :parameter
-            command : string, allowed values = "walls"  "distance"
-            robot1,robot2: string, allowed values = name of any model peresent in simulation
-            -------
-            :returns
-            a list with 2 elemnts "distance" attribute of the response object and
-             "number_of_objects" attribute of response object
+        """sends a request to the gazebo server for information
+        :parameter
+        command : string, allowed values = walls  distance
+        robot1,robot2: string, allowed values = name of any model peresent in simulation
+        -------
+        :returns
+        a list with 2 elemnts "distance" attribute of the response object and
+        number_of_objects attribute of response object
 
-            ---------
-            """
+        ---------
+        """
         request = distance_serivceRequest(command, robot1, robot2)
         output = [None, None]
         try:
@@ -59,7 +59,7 @@ class GetInfo:
         return output
 
 
-server_list=rosservice.rosservice_find("distance_serivce") """  we call rosservice_find to find any service with the "distance_srvice" type """
+server_list=rosservice.rosservice_find("gazebo_information_plugins/distance_serivce") #  we call rosservice_find to find any service with the distance_srvice type
 environment_info=[]
 for i in server_list:
     environment_info.append(GetInfo(i))

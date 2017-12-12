@@ -42,7 +42,7 @@ def send_message(message=None, message_type=None,message_tag=""):
 
 
 
-def receive_message(name_space="", message_type=None,message_tag="", callback_function):
+def receive_message(name_space="", message_type=None,message_tag="", callback_function=None):
     """Receive a message
     This is the a wrapper around a ros subscriber
 
