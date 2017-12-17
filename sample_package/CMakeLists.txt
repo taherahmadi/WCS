@@ -11,6 +11,7 @@ find_package(catkin REQUIRED COMPONENTS
   message_generation
   roscpp
   rospy
+  communication_node
 )
 
 ## System dependencies are found with CMake's conventions
@@ -49,9 +50,7 @@ generate_messages(
 
 catkin_package(
 
-
   CATKIN_DEPENDS message_runtime
-
 )
 
 ###########
@@ -66,6 +65,10 @@ include_directories(
 
 
 
-add_executable(sample_code src/sample_code.cpp)
-target_link_libraries(sample_code ${catkin_LIBRARIES})
+add_executable(sample_publisher src/sample_publisher.cpp)
+target_link_libraries(sample_publisher ${catkin_LIBRARIES})
+
+add_executable(sample_subscriber src/sample_subscriber.cpp)
+target_link_libraries(sample_subscriber ${catkin_LIBRARIES})
+
 

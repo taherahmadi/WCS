@@ -17,7 +17,7 @@ publishes on /message_server topic
 
 import rospy
 from communication_node.msg import Data_Map, Data_Image, Data_Position
-from registration_client import registration_client
+
 
 
 def send_message(message=None, message_type=None,message_tag=""):
@@ -60,18 +60,3 @@ def receive_message(name_space="", message_type=None,message_tag="", callback_fu
     return rospy.Subscriber(name_space + "/inbox_"+message_tag, message_type, callback_function)
 
 
-def register(robot_namespace):
-    """Register a robot in communication_node
-    This is needed for security, reliability and etc.
-
-    :returns
-    message : string
-    robot_namespace : string, indicating robot name_space
-
-    Relations
-    ----------
-    """
-    # TODO registration api goes here
-    result = registration_client(robot_namespace)
-    print("Result:", ', '.join([str(n) for n in result.robots_list]))
-    pass
