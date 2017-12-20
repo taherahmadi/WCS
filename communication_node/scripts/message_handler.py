@@ -24,21 +24,10 @@ from nav_msgs.msg import *
 from environment_information import get_object_distance
 from propagation_models import one_slope_model_checker
 
-debuger_mode=False
-information_logger=None
 rate=None
 message_handlers_list=[]
 propagation_parameters={ "decay_factor":4.0,"l0":33.3,"threshold":70}
 
-
-def on_exit(*args):
-    global information_logger
-    print ( "\n EXITING MESSAGE HANDLER")
-    if information_logger!=None :
-         information_logger.write("\n The Test has finished on "+strftime("%Y-%m-%d %H:%M:%S", gmtime()) + " GMT time \n")
-         information_logger.write("\n ======================== \n ======================== \n \n \n")
-         information_logger.close()
-    sys.exit(0)
 
 class message_handle:
     """
@@ -79,7 +68,7 @@ class message_handle:
             ----------
             publishes to "data.source"+"self.pub_topic"
             """
-            global information_logger
+
             global propagation_parameters
             # TODO handle for different message types
             # TODO prop_model = data.prop_model
@@ -115,50 +104,21 @@ class message_handle:
                        i=0
 
                     print "communication is possible"
-                    if debuger_mode==True :
-                        # we write infomation to the log file
-                       information_logger.write(self.tag+"".join(["-" for k in range(0,11-len(self.tag))]))
-                       information_logger.write(data.source+"".join(["-" for k in range(0,11-len(data.source))]))
-                       information_logger.write(data.destination+"".join(["-" for k in range(0,20-len(data.destination))]))
-                       information_logger.write(str(distance)+"".join(["-" for k in range(0,18-len(str(distance)))]))
-                       information_logger.write("message sent"+"\n")
-
                 else:
                     # TODO, ignore the message, send feedback
-                    if debuger_mode==True :
-                      # we write infomation to the log file
-                      information_logger.write(self.tag+"".join(["-" for k in range(0,11-len(self.tag))]))
-                      information_logger.write(data.source+"".join(["-" for k in range(0,11-len(data.source))]))
-                      information_logger.write(data.destination+"".join(["-" for k in range(0,20-len(data.destination))]))
-                      information_logger.write(str(distance)+"".join(["-" for k in range(0,18-len(str(distance)))]))
-                      information_logger.write("failed"+"\n")
                     print "communication is not possible"
 
 
 
 def listener():
-    global information_logger
     global rate
-    global debuger_mode
     global message_handlers_list;
     global propagation_models;
     rospy.init_node('communication_node_message_handler')
     rate=rospy.Rate(10)
-    debuger_mode=rospy.get_param("debuger_mode",default=False)
-    if debuger_mode==True :
-         log_file=rospy.get_param("log_file",default="results")
-         if not os.path.exists("path"+log_file):
-             os.makedirs("path"+log_file)
-         information_logger =  open("path"+log_file+"/"+log_file+".log", "a")
-         information_logger.write("\n \n \n ###################### \n ###################### \n")
-         information_logger.write("\n This is the result of test on "+strftime("%Y-%m-%d %H:%M:%S", gmtime()) + " GMT time \n")
-         information_logger.write("propagation parameters===>>>"+" [decay_factor="+str(propagation_parameters["decay_factor"])+" ]--[ l0="+str(propagation_parameters["l0"])+"]--[ threshold="+str(propagation_parameters["threshold"])+ "]\n")
-         information_logger.write("Type-------Source-----Destination---------Distance----------Outcome\n");
     message_list=[["/message_server_","/inbox_sample",Data_sample,"sample",None]];
     for i in range (0,len(message_list)):
         message_handlers_list.append(message_handle(message_list[i][0],message_list[i][1],message_list[i][2],message_list[i][3],message_list[i][4]));
-    signal.signal(signal.SIGINT, on_exit)
-    signal.signal(signal.SIGTERM, on_exit)
     rospy.spin()
 
 
