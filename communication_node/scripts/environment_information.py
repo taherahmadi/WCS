@@ -52,10 +52,8 @@ class GetInfo:
             response = self.client(request)
             output = [response.distance, response.number_of_objects]
         except Exception as e:
-            print (e)
             print ("sending the request failed")
             response = "failed"
-            print(command,"---",robot1,"---",robot2)
         return output
 
 

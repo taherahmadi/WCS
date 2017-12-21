@@ -72,7 +72,6 @@ class message_handle:
             global propagation_parameters
             # TODO handle for different message types
             # TODO prop_model = data.prop_model
-            print("new "+self.tag+" received")
             robots_list=rospy.get_param("/robots_list")
             if (data.destination not in robots_list) or ( data.source not in robots_list):
                 print ("unregistered robot")
@@ -81,7 +80,6 @@ class message_handle:
             if prop_model == '1sm':
                 # distance = get_object_distance("pioneer3at", "Dumpster")
                 distance = get_object_distance(data.destination, data.source)
-                print (type(distance),self.tag)
                 while (distance==None):
                     distance = get_object_distance(data.destination, data.source)
                 result = one_slope_model_checker(distance=distance,decay_factor=propagation_parameters["decay_factor"],l0=propagation_parameters["l0"],threshold=propagation_parameters["threshold"])
