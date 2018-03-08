@@ -26,18 +26,22 @@ to set up this package and prepare your world follow the steps:
 ...you can do it by adding `<plugin name='gazebo_simple_world' filename='libgazebo_simple_world.so'/>` to your .world file
 
 ### important
-make sure all the models in your .world file start with one of the following strings "Hard_wall","Soft_wall","Medium_wall" if the name of a model does not start with one of the mentioned strings that model will be considered a Soft_wall when computing the signal decay.
+It is recommanded that the models in your .world file start with one of the following strings "Hard_wall","Soft_wall","Medium_wall" if the name of a model does not start with one of the mentioned strings that model will be considered a Soft_wall when computing the signal decay.
 
 
 
-## Preparing .msg files and message handler
+## Preparing Costum message files and message handler
 
 
 * 1- creating message files:
 
   the communication_node package contains code for message_handler node and update_info node and messanger api files and also msg files used by the message_handler.In the msg directory there are several .msg files. Data_sample.msg is an example.
 
-  Each Data_*.msg file has four fields . header,source and destenation are always the same for all files. the fourth field is data and can have different types based on your own message files or common ROS messages like odometry or occupancygrid or laserscan .
+  Each Data_*.msg file has four fields that the sender has to complete:
+     * header : you can use it for time stamp and message number
+     * source : a string with the namespace of the sender node.
+     * destenation : a string with the namespace of the receiving node. 
+     * data : this field can have different types based on your own message files or common ROS messages like odometry or occupancygrid or laserscan .
   for every messeage type you want to use you have to create one Data_*.msg file.
 
   Next you have to add all Data_*.msg that you want to add_message_files in the CMakeLists.txt of this package if Data_*.msg depends on a package named mypackage then you need to add mypackage to generate_messages in the CMakeLists.txt of this package 
