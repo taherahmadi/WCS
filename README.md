@@ -26,7 +26,7 @@ to set up this package and prepare your world follow the steps:
 ...you can do it by adding `<plugin name='gazebo_simple_world' filename='libgazebo_simple_world.so'/>` to your .world file
 
 ### important
-make sure all the models in your .world file start with one of the following strings "Hard_wall","Soft_wall","Medium_wall"
+make sure all the models in your .world file start with one of the following strings "Hard_wall","Soft_wall","Medium_wall" if the name of a model does not start with one of the mentioned strings that model will be considered a Soft_wall when computing the signal decay.
 
 
 
