@@ -35,9 +35,7 @@ make sure all the models in your .world file start with one of the following str
 
 * 1- creating message files:
 
-...the communication_node package contains code for message_handler node and update_info node and messanger api files and also msg files
-...used by the message_handler.In the msg directory there are several .msg files.
-...Data_sample.msg is an example.
+  ...the communication_node package contains code for message_handler node and update_info node and messanger api files and also msg files used by the message_handler.In the msg directory there are several .msg files. Data_sample.msg is an example.
 
 ...Each Data_*.msg file has four fields . header,source and destenation are always the same for
 ...all files. the fourth field is data and can have different types based on your own message files or common ROS messages like odometry or occupancygrid or laserscan .
