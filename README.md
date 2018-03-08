@@ -35,24 +35,22 @@ make sure all the models in your .world file start with one of the following str
 
 * 1- creating message files:
 
-  ...the communication_node package contains code for message_handler node and update_info node and messanger api files and also msg files used by the message_handler.In the msg directory there are several .msg files. Data_sample.msg is an example.
+  the communication_node package contains code for message_handler node and update_info node and messanger api files and also msg files used by the message_handler.In the msg directory there are several .msg files. Data_sample.msg is an example.
 
-...Each Data_*.msg file has four fields . header,source and destenation are always the same for
-...all files. the fourth field is data and can have different types based on your own message files or common ROS messages like odometry or occupancygrid or laserscan .
-...for every messeage type you want to use you have to create one Data_*.msg file.
+  Each Data_*.msg file has four fields . header,source and destenation are always the same for all files. the fourth field is data and can have different types based on your own message files or common ROS messages like odometry or occupancygrid or laserscan .
+  for every messeage type you want to use you have to create one Data_*.msg file.
 
-...Next you have to add all Data_*.msg that you want to add_message_files in the CMakeLists.txt of this package 
-...if Data_*.msg depends on a package named mypackage then you need to add mypackage to generate_messages in the CMakeLists.txt of this package 
-...Data_sample.msg and sample_package and sample_message.msg are good examples.
+  Next you have to add all Data_*.msg that you want to add_message_files in the CMakeLists.txt of this package if Data_*.msg depends on a package named mypackage then you need to add mypackage to generate_messages in the CMakeLists.txt of this package 
+  Data_sample.msg and sample_package and sample_message.msg are good examples.
 
 * 2- setting up message handler:
-...message_handler.py in the scripts folder is responsible for transporting message from one node to another.
-...before you can use it , you need to set type of the messages that you want to use.
-...for each message type you have to add a python list to the `message_list` variable in line 114 of message_handler.py
-... the list has 2 elements:
+  message_handler.py in the scripts folder is responsible for transporting message from one node to another.
+  before you can use it , you need to set type of the messages that you want to use.
+  for each message type you have to add a python list to the `message_list` variable in line 114 of message_handler.py
+  the list has 2 elements:
 
-..* the first element is the type of the message 
-..* the second element is the tag that should be unique arbitary string for each message type 
+  * the first element is the type of the message 
+  * the second element is the tag that should be unique arbitary string for each message type 
 
 
 
@@ -64,16 +62,16 @@ make sure all the models in your .world file start with one of the following str
 
 
 * 2- for sending messages use `send_message()` function which takes 3 arguments
-..* the first argument is the message object
-..* the second argumnet is the type of the message 
-..* the third argument is the tag of message that should be equal to the tag used in message_handler.py
+  * the first argument is the message object
+  * the second argumnet is the type of the message 
+  * the third argument is the tag of message that should be equal to the tag used in message_handler.py
 
 
 * 3- for receiving messages use `receive_message()` which returns a standard ros subscriber object and takes 4 arguments:
-..* the first argument is the namespace of the destination node
-..* the second argumnet is the type of the message 
-..* the third argument is the tag of message that should be equal to the tag used in message_handler.py
-..* the fourth argument is the callback function that will be called when a new message has arrived
+  * the first argument is the namespace of the destination node
+  * the second argumnet is the type of the message 
+  * the third argument is the tag of message that should be equal to the tag used in message_handler.py
+  * the fourth argument is the callback function that will be called when a new message has arrived
 
 files in the sample_package/scripts are good examples
 
