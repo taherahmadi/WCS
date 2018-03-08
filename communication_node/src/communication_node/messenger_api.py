@@ -35,7 +35,7 @@ def send_message(message=None, message_type=None,message_tag=""):
     """
     message_publisher = rospy.Publisher("/message_server_"+message_tag, message_type, queue_size=10)
     # rospy.init_node(robot_namespace + '_message_sender_node', anonymous=True)
-    rate = rospy.Rate(1)  # 10hz
+    rate = rospy.Rate(0.5)  # 10hz
     message_publisher.publish(message)
     rate.sleep()
 

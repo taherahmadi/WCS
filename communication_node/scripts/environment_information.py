@@ -47,13 +47,15 @@ class GetInfo:
         ---------
         """
         request = distance_serivceRequest(command, robot1, robot2)
-        output = [None, None]
+        output = [None, None,None]
         try:
             response = self.client(request)
-            output = [response.distance, response.number_of_objects]
+            output = [response.distance, response.number_of_objects, response.objects_type]
         except Exception as e:
-            print ("sending the request failed")
+            print (e)
+            #print ("sending the request failed")
             response = "failed"
+            #print(command,"---",robot1,"---",robot2)
         return output
 
 
@@ -112,11 +114,11 @@ def get_n_walls_between(ns1, ns2):
     output_info = (environment_info[counter]).request_func(command="walls", robot1=ns1, robot2=ns2)
     counter=counter+1
     distance = output_info[0]
-    number_of_walls = output_info[1]
+    number_of_walls = output_info[2]
     if distance == -1:
         print("wrong model name")
         return -1
-    return number_of_walls
+    return [distance,number_of_walls]
 
 
 def get_object_distance(ns1, ns2):

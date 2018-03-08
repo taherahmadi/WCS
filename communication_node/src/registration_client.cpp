@@ -23,14 +23,12 @@ int main(int argc, char **argv)
 
   //wait for the action to return
   bool finished_before_timeout = ac.waitForResult(ros::Duration(5.0));
-
-   while (!finished_before_timeout){
+   while (!finished_before_timeout or ac.getState()!=actionlib::SimpleClientGoalState::SUCCEEDED){
         ac.sendGoal(goal);
        finished_before_timeout = ac.waitForResult(ros::Duration(5.0));
 
    }
-   actionlib::SimpleClientGoalState state = ac.getState();
-   ROS_INFO("Action finished: %s",state.toString().c_str());
+   ROS_INFO("Action finished: %s",ac.getState().toString().c_str());
    ROS_INFO("Robot: %s registered successfully.", robot_namespace.c_str());
 
   // if (finished_before_timeout)

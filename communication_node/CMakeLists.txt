@@ -20,7 +20,6 @@ find_package(catkin REQUIRED COMPONENTS
 )
 
 ## System dependencies are found with CMake's conventions
-find_package(Boost REQUIRED COMPONENTS system)
 
 
 ## Uncomment this if the package has a setup.py. This macro ensures
@@ -55,10 +54,11 @@ catkin_python_setup()
 ## Generate messages in the 'msg' folder
 add_message_files(FILES
   Data_Image.msg
-  Data_Position.msg
+  Data_Sample.msg
   Data_Map.msg
   Data_Odom.msg
-  Data_sample.msg
+  Data_Goal.msg
+
 )
 
 ## Generate services in the 'srv' folder
@@ -88,7 +88,7 @@ add_action_files(
 
 generate_messages(
   DEPENDENCIES
-  actionlib_msgs sample_package std_msgs sensor_msgs  nav_msgs 
+  actionlib_msgs std_msgs sensor_msgs  nav_msgs sample_package
 )
 
 
@@ -138,7 +138,6 @@ catkin_package(
 # include_directories(include)
 include_directories(
   ${catkin_INCLUDE_DIRS}
-  ${Boost_INCLUDE_DIRS}
 )
 
 ## Declare a C++ library

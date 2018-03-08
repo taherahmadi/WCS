@@ -40,14 +40,14 @@ public:
     bool success = true;
     robots_list_.clear();
     nh_.getParam("robots_list", robots_list_);
-    
-    
+
+
     std::string temp = "registering " ;
     std::string new_robot_name = goal->robot_namespace;
-    
-    // status 
+
+    // status
     feedback_.status = temp + new_robot_name;
-    
+
     // checking some conditions ...
     if(std::find(robots_list_.begin(), robots_list_.end(), new_robot_name.c_str()) == robots_list_.end()){
 
@@ -58,26 +58,28 @@ public:
       // add robto_namespace to the robots_list and increase robot_counter by one
       robots_list_.push_back(goal->robot_namespace);
       robot_counter_++;
-      
+
       // check that preempt has not been requested by the client
       if (as_.isPreemptRequested() || !ros::ok())
       {
         ROS_INFO("%s: Preempted", action_name_.c_str());
         // set the action state to preempted
+          success = false;
         as_.setPreempted();
-        success = false;
+
         // break;
       }
-      
+
       // add registered robot to the parameter robots_list
-      nh_.setParam("robots_list", robots_list_);
+
       // publish the feedback
       as_.publishFeedback(feedback_);
       // this sleep is not necessary, the sequence is computed at 1 Hz for demonstration purposes
-      r.sleep();
+    //  r.sleep();
 
       if(success)
       {
+          nh_.setParam("robots_list", robots_list_);
         result_.robots_list = robots_list_;
         ROS_INFO("%s: Succeeded", action_name_.c_str());
         // set the action state to succeeded

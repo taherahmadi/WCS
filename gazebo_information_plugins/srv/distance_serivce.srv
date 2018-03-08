@@ -4,3 +4,4 @@ string robot2
 ---
 float32 distance
 int32 number_of_objects
+int32[] objects_type

@@ -65,10 +65,10 @@ include_directories(
 
 
 
-add_executable(sample_publisher src/sample_publisher.cpp)
-target_link_libraries(sample_publisher ${catkin_LIBRARIES})
+#add_executable(sample_publisher src/sample_publisher.cpp)
+#target_link_libraries(sample_publisher ${catkin_LIBRARIES})
 
-add_executable(sample_subscriber src/sample_subscriber.cpp)
-target_link_libraries(sample_subscriber ${catkin_LIBRARIES})
+#add_executable(sample_subscriber src/sample_subscriber.cpp)
+#target_link_libraries(sample_subscriber ${catkin_LIBRARIES})
 
 

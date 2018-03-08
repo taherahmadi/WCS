@@ -4,7 +4,7 @@ below are the instructions you need to work with this system.
 firts you need to create system compatable message from your own message files 
 in the msg directory there are several .msg files
 Data_sample.msg is an example. each Data_*.msg file has four fields . header,source and destenation are always the same for
-all files. the fourth field is data and can have different types based on your own message files or common ROS messages like odometry or occupancygric or laserscan .
+all files. the fourth field is data and can have different types based on your own message files or common ROS messages like odometry or occupancygrid or laserscan .
 for every messeage type you want to use you have to create one Data_*.msg file.
 
 next you have to add all Data_*.msg that you want to add_message_files in the CMakeLists.txt of this package 
@@ -23,3 +23,12 @@ keep this tag in mind because we'll need it later.
 
 for sending and recieving messages you need to use to functions from messenger_api.py . 
 system_test_publisher1.py and system_test_subscriber1.py are examples of how to use this api.
+
+
+
+
+#important 
+
+there is an open issuse with the registration server:
+if you want to  register your robots at the same time it's possible that the requests sent to the registration server be dropped due to the limitations of actionlib
+ so it's is highly recommanded that you register your robot one by one .

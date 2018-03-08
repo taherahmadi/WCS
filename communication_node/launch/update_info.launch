@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<launch>
+
+    <node pkg="communication_node" type="update_info.py" name="update_info" output="screen" />
+
+
+</launch>

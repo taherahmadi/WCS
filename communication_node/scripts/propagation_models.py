@@ -33,23 +33,25 @@ import numpy as np
 # TODO get the model parameters from parameter server
 
 def _one_slope_model_checker(distance, decay_factor, l0, threshold):
-    signal_loss = l0 + 10 * decay_factor * np.log10(distance)
+    signal_loss = _one_slope_model_strength(distance, decay_factor, l0)
     #print signal_loss
 
     if signal_loss <= threshold:
-        return True
+        return [True,-signal_loss]
     else:
-        return False
+        return [False,-signal_loss]
 
 
 def _one_slope_model_strength(distance, decay_factor, l0):
     return l0 + 10 * decay_factor * np.log10(distance)
 
 
+
+
 def one_slope_model_checker(distance,
-                            decay_factor=4.0,
-                            l0=33.3,
-                            threshold=70):
+                            decay_factor=2.0,
+                            l0=40.0,
+                            threshold=93):
     """Compute the possibility of communication using 1SM method.
         l0 and decay_factor are empirical parameters for a given environment.
         Tab.1 in [2] presents a few values taken from various references.
@@ -81,24 +83,20 @@ def one_slope_model_checker(distance,
     result : boolean indicating communication possibility
     """
 
-    return _one_slope_model_checker(l0, decay_factor, distance, threshold)
+    return _one_slope_model_checker(distance, decay_factor, l0, threshold)
 
 
-def one_slope_model_strength(distance,
-                             decay_factor=4.0,
-                             l0=33.3):
-    """Compute the signal strength using 1SM method.
-    :parameter
-
-    decay_factor : power decay factor or path loss exponent
-
-    distance : distance between robots
-
-    l0 : reference loss value for the distance of 1m
 
 
-    :returns:
-    result : integer indicating signal loss
-    """
+def multi_wall_model_checker(distance,number_of_walls,
+                            decay_factor=2.0,
+                            l0=40.0,
+                            threshold=93):
+    wall_decays=[6.0,8.0,10.0];
+    signal_loss = _one_slope_model_strength(distance, decay_factor, l0)+(wall_decays[0]*number_of_walls[0])+(wall_decays[1]*number_of_walls[1])+(wall_decays[2]*number_of_walls[2])
+    #print signal_loss
 
-    return _one_slope_model_strength(l0, decay_factor, distance)
+    if signal_loss <= threshold:
+        return [True,-signal_loss]
+    else:
+        return [False,-signal_loss]

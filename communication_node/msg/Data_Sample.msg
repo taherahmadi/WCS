@@ -1,4 +1,4 @@
   Header header
   string source
   string destination
-  string command
+  sample_package/sample_message data

@@ -1,4 +1,4 @@
 Header header
 string source
 string destination
-nav_msgs/Odometry odom
+nav_msgs/Odometry data
