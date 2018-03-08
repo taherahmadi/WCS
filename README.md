@@ -34,6 +34,7 @@ make sure all the models in your .world file start with one of the following str
 
 
 * 1- creating message files:
+
 ...the communication_node package contains code for message_handler node and update_info node and messanger api files and also msg files
 ...used by the message_handler.In the msg directory there are several .msg files.
 ...Data_sample.msg is an example.
@@ -95,7 +96,7 @@ files in the sample_package/scripts are good examples
 
 
 
-#important 
+# important 
 
 currently the system has a few issuses that don't make any problems under most circumstances but it's better to be careful 
 below is the list of these known issuses :
