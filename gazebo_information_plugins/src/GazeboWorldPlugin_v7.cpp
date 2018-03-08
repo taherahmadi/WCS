@@ -136,10 +136,11 @@ namespace gazebo {
 
             int hard_num=0,soft_num=0,medium_num=0;
             for (int k=0;k<vec.size();k++){
-              if(vec[k].length()<9){continue;}
+              if(vec[k].length()<9){soft_num++;}
               else if (!Soft_wall.compare(vec[k].substr(0,9))){soft_num++;}
               else if (!Hard_wall.compare(vec[k].substr(0,9))){hard_num++;}
               else if (!Medium_wall.compare(vec[k].substr(0,11))){medium_num++;}
+              else {soft_num++;}
             }
             type_vec.push_back(soft_num);
             type_vec.push_back(medium_num);
