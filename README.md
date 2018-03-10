@@ -50,6 +50,7 @@ It is recommanded that the models in your .world file start with one of the foll
   Data_sample.msg and sample_package and sample_message.msg are good examples.
 
 * 2- setting up message handler:
+
   message_handler.py in the scripts folder is responsible for transporting message from one node to another.
   before you can use it , you need to set type of the messages that you want to use.
   for each message type you have to add a python list to the `message_list` variable in line 114 of message_handler.py
