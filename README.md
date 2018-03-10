@@ -57,7 +57,7 @@ It is recommended that the models in your .world file start with one of the foll
   the list has 2 elements:
 
   * the first element is the type of the message 
-  * the second element is the tag that should be an unique arbitary string for each message type 
+  * the second element is the tag that should be an unique arbitrary string for each message type 
 
 
 
