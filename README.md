@@ -42,9 +42,9 @@ It is recommended that the models in your .world file start with one of the foll
   Each Data_*.msg file has four fields that the sender has to complete:
      * header : you can use it for time stamp and message number
      * source : a string with the namespace of the sender node.
-     * destenation : a string with the namespace of the receiving node. 
+     * destination : a string with the namespace of the receiving node. 
      * data : this field can have different types based on your own message files or common ROS messages like odometry or occupancygrid or laserscan .
-  for every messeage type you want to use you have to create one Data_*.msg file.
+  for every message type you want to use you have to create one Data_*.msg file.
 
   Next you have to add all Data_*.msg that you want to add_message_files in the CMakeLists.txt of this package if Data_*.msg depends on a package named mypackage then you need to add mypackage to generate_messages in the CMakeLists.txt of this package 
   Data_sample.msg and sample_package and sample_message.msg are good examples.
