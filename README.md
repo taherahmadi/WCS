@@ -70,7 +70,7 @@ It is recommended that the models in your .world file start with one of the foll
 
 * 2- for sending messages use `send_message()` function which takes 3 arguments
   * the first argument is the message object
-  * the second argumnet is the type of the message 
+  * the second argument is the type of the message 
   * the third argument is the tag of message that should be equal to the tag used in message_handler.py
 
 
