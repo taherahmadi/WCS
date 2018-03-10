@@ -20,10 +20,10 @@ to set up this package and prepare your world follow the steps:
 * 1- compile the packages with catkin_make
 
 * 2- add (your_workspace)/devel/lib to GAZEBO_PLUGIN_PATH :
-...you can do it by adding `export GAZEBO_PLUGIN_PATH=${GAZEBO_PLUGIN_PATH}:~/(your_workspace)/devel/lib` to your ~/.bashrc or ~/.zshrc
+  you can do it by adding `export GAZEBO_PLUGIN_PATH=${GAZEBO_PLUGIN_PATH}:~/(your_workspace)/devel/lib` to your ~/.bashrc or ~/.zshrc
 
 * 3- add libgazebo_world_plugin_v7.so as a plugin to the .world file that you want to use in gazebo:
-...you can do it by adding `<plugin name='gazebo_simple_world' filename='libgazebo_simple_world.so'/>` to your .world file
+  you can do it by adding `<plugin name='gazebo_simple_world' filename='libgazebo_simple_world.so'/>` to your .world file
 
 ### important
 It is recommanded that the models in your .world file start with one of the following strings "Hard_wall","Soft_wall","Medium_wall" if the name of a model does not start with one of the mentioned strings that model will be considered a Soft_wall when computing the signal decay.
