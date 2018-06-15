@@ -16,7 +16,7 @@ publishes on /message_server topic
 """
 
 import rospy
-from communication_node.msg import Data_Map, Data_Image, Data_Position
+from communication_node.msg import *
 
 
 

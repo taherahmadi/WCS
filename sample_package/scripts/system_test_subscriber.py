@@ -3,7 +3,7 @@
 import rospy
 from  communication_node.messenger_api import *
 from communication_node.msg import *
-from sample_packge.msg import *
+from sample_package.msg import *
 
 a=None
 def callback(data):
@@ -12,7 +12,7 @@ def callback(data):
 
 def main():
     global a;
-    a=receive_message("robot2", Data_sample, "sample",callback)
+    a=receive_message("robot2", Data_Sample, "sample",callback)
 
 
 if __name__ == "__main__":

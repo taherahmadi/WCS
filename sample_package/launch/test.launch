@@ -2,8 +2,8 @@
 <launch>
 
 
-  <node pkg="sample_test" type="system_test_publisher.py" name="publishing_node" output="screen" />
+  <node pkg="sample_package" type="system_test_publisher.py" name="publishing_node" output="screen" />
  
-  <node pkg="sample_test" type="system_test_subscriber.py" name="subscribing_node" output="screen" />
+  <node pkg="sample_package" type="system_test_subscriber.py" name="subscribing_node" output="screen" />
  
 </launch>
