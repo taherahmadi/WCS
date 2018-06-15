@@ -37,7 +37,7 @@ It is recommended that the models in your .world file start with one of the foll
 
 * 1- creating message files:
 
-  the communication_node package contains code for message_handler node and update_info node and messanger api files and also msg files used by the message_handler.In the msg directory there are several .msg files. Data_sample.msg is an example.
+  the communication_node package contains code for message_handler node and update_info node and messanger api files and also msg files used by the message_handler.In the msg directory there are several .msg files. Data_Sample.msg is an example.
 
   Each Data_*.msg file has four fields that the sender has to complete:
      * header : you can use it for time stamp and message number
@@ -46,8 +46,9 @@ It is recommended that the models in your .world file start with one of the foll
      * data : this field can have different types based on your own message files or common ROS messages like odometry or occupancygrid or laserscan .
   for every message type you want to use you have to create one Data_*.msg file.
 
-  Next you have to add all Data_*.msg that you want to add_message_files in the CMakeLists.txt of this package if Data_*.msg depends on a package named mypackage then you need to add mypackage to generate_messages in the CMakeLists.txt of this package 
-  Data_sample.msg and sample_package and sample_message.msg are good examples.
+  Next you have to add all Data_*.msg that you want to add_message_files in the CMakeLists.txt of this package if Data_*.msg depends on a package named mypackage then you need to add mypackage to generate_messages in the CMakeLists.txt of this package.
+  
+  Data_Sample.msg in communication_node and sample_message.msg in sample_package are good examples.
 
 * 2- setting up message handler:
 
