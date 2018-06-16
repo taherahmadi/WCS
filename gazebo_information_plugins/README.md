@@ -1,6 +1,6 @@
 
 # IMPORTANT
-this package works with gazebo 7
+this package works with gazebo 8
 
 after compiling the package make sure you add the following line to your ~/.bashrc or ~/.zshrc:
 
@@ -12,4 +12,3 @@ after compiling the package make sure you add the following line to your ~/.bash
 
 also add the following line to the .world file:
   `<plugin name='sosvr_gazebo_plugin_simple' filename='libsosvr_gazebo_plugin_simple.so'/>`
-
