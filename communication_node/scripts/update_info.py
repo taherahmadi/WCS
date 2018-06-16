@@ -25,7 +25,9 @@ direct_connection=[];
 debuger_mode=False;
 information_logger=None;
 robots_list=[];
-prop_model="mwm";
+# prop_model="mwm";
+# prop_model="mwm";
+prop_model="range";
 
 
 
@@ -39,19 +41,31 @@ def line_of_sight():
     for i in range(0,len(connection_list)):
         for j in range(0,len(robots_list)):
             if (connection_list[i][0]==robots_list[j]):continue;
-            if prop_model=="1sm":
+            if prop_model=="range":
                 distance = get_object_distance(robots_list[i],robots_list[j]);
                 if(distance==-1 or distance==None):
                     connection_list[i][1+j]=0;
                     direct_connection[i][1+j]=0;
                     continue;
-                result = one_slope_model_checker(distance=distance,decay_factor=propagation_parameters["decay_factor"],l0=propagation_parameters["l0"],threshold=propagation_parameters["threshold"])
-                if(result[0]==True):
+                if(distance < 30):
                     connection_list[i][1+j]=1;
                     direct_connection[i][1+j]=1;
                 else:
                      connection_list[i][1+j]=0;
                      direct_connection[i][1+j]=0;
+             if prop_model=="1sm":
+                 distance = get_object_distance(robots_list[i],robots_list[j]);
+                 if(distance==-1 or distance==None):
+                     connection_list[i][1+j]=0;
+                     direct_connection[i][1+j]=0;
+                     continue;
+                 result = one_slope_model_checker(distance=distance,decay_factor=propagation_parameters["decay_factor"],l0=propagation_parameters["l0"],threshold=propagation_parameters["threshold"])
+                 if(result[0]==True):
+                     connection_list[i][1+j]=1;
+                     direct_connection[i][1+j]=1;
+                 else:
+                      connection_list[i][1+j]=0;
+                      direct_connection[i][1+j]=0;
             elif prop_model=="mwm":
                 distance_and_walls = get_n_walls_between(robots_list[i],robots_list[j]);
                 if(distance_and_walls==-1 or distance_and_walls==None):
