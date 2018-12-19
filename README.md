@@ -23,9 +23,9 @@ to set up this package and prepare your world follow the steps:
 
   you can do it by adding `export GAZEBO_PLUGIN_PATH=${GAZEBO_PLUGIN_PATH}:~/(your_workspace)/devel/lib` to your ~/.bashrc or ~/.zshrc
 
-* 3- add libgazebo_world_plugin_v7.so as a plugin to the .world file that you want to use in gazebo:
+* 3- add libgazebo_connection_plugin.so as a plugin to the .world file that you want to use in gazebo:
 
-  you can do it by adding `<plugin name='gazebo_simple_world' filename='libgazebo_simple_world.so'/>` to your .world file
+  you can do it by adding `<plugin name='gazebo_connection_plugin' filename='libgazebo_connection_plugin.so'/>` to your .world file inside <world></world> tags
 
 ### important
 It is recommended that the models in your .world file start with one of the following strings "Hard_wall","Soft_wall","Medium_wall" if the name of a model does not start with one of the mentioned strings that model will be considered a Soft_wall when computing the signal decay.
