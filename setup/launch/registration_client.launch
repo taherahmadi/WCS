@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<launch>
+
+<!--   #####################################################  -->
+<!--   #####################################################  -->
+<!--   #####################################################  -->
+
+  <arg name="robotname1" default="robot_1"/>
+
+  <group ns="$(arg robotname1)">
+ <node pkg="communication_node" type="registration_client" name="registration_client_node">
+      <param name="robot_namespace" type="string" value="$(arg robotname1)" />
+
+    </node>
+  </group>
+
+<!--   #####################################################  -->
+<!--   #####################################################  -->
+<!--   #####################################################  -->
+<!--   #####################################################  -->
+<arg name="robotname2" default="robot_2"/>
+
+  <group ns="$(arg robotname2)">
+ <node pkg="communication_node" type="registration_client" name="registration_client_node">
+      <param name="robot_namespace" type="string" value="$(arg robotname2)" />
+
+    </node>
+  </group>
+<!--   #####################################################  -->
+<!--   #####################################################  -->
+<!--   #####################################################  -->
+<!--   #####################################################  -->
+
+
+ <arg name="robotname3" default="robot_3"/>
+
+  <group ns="$(arg robotname3)">
+ <node pkg="communication_node" type="registration_client" name="registration_client_node">
+      <param name="robot_namespace" type="string" value="$(arg robotname3)" />
+
+    </node>
+  </group>
+
+<!--   #####################################################  -->
+<!--   #####################################################  -->
+<!--   #####################################################  -->
+<!--   #####################################################  -->
+ <arg name="robotname4" default="robot_4"/>
+
+  <group ns="$(arg robotname4)">
+ <node pkg="communication_node" type="registration_client" name="registration_client_node">
+      <param name="robot_namespace" type="string" value="$(arg robotname4)" />
+
+    </node>
+  </group>
+
+
+ <!--   #####################################################  -->
+<!--   #####################################################  -->
+<!--   #####################################################  -->
+<!--   #####################################################  -->
+
+
+</launch>

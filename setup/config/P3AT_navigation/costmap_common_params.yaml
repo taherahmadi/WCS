@@ -1,0 +1,29 @@
+footprint: [ [0.3602, -0.0708], [0.274, -0.0708], [0.274, -0.254], [-0.274, -0.274], [-0.274, 0.274], [0.274, 0.274], [0.274, 0.0708], [0.3602, 0.0708] ]
+footprint_padding: 0.1
+transform_tolerance:    1.5
+update_frequency: 6.0
+publish_frequency: 5.0
+
+static:
+  unknown_cost_value:        -1
+  lethal_cost_threshold:     100
+  map_topic:                 map
+  subscribe_to_updates:      true
+  track_unknown_space: true
+
+
+obstacles_costmap2d:
+  track_unknown_space: true
+  observation_sources: laser_scan_sensor
+  laser_scan_sensor: {sensor_frame: hokuyo_frame, data_type: LaserScan, topic: hokuyo, marking: true, clearing: true, raytrace_range: 7.5, obstacle_range: 6.5}
+
+
+
+obstacles_costmap2d2:
+  track_unknown_space: true
+  observation_sources: laser_scan_sensor
+  laser_scan_sensor: {sensor_frame: hokuyo_frame, data_type: LaserScan, topic: hokuyo, marking: true, clearing: true, raytrace_range: 30.5, obstacle_range: 29.5}
+
+inflation:
+  inflation_radius: 1.75
+  cost_scaling_factor: 2.58

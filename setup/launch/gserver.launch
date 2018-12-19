@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<launch>
+
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+  <arg name="paused" default="false"/>
+  <arg name="world_name" default="$(find setup)/worlds/Maze_World.world"/>
+  <arg name="gui" default="false"/>
+  </include>
+
+</launch>

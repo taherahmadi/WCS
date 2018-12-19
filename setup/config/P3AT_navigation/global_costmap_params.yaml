@@ -1,0 +1,15 @@
+global_costmap:
+  global_frame: /map
+  robot_base_frame: base_link
+  resolution: 0.2
+  rolling_window:             false
+  track_unknown_space:        true
+  width:                      150.0
+  height:                     150.0
+  origin_x:                   -75.0
+  origin_y:                   -75.0
+  static:                     true
+
+  plugins:
+     - {name: static,                    type: "costmap_2d::StaticLayer"}
+     - {name: inflation,                 type: "costmap_2d::InflationLayer"}

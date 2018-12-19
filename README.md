@@ -98,7 +98,7 @@ files in the sample_package/scripts are good examples
 
 * 6- now launch your nodes.
 
-
+# for a demo pleas read Demo.md in package "setup"
 
 # important 
 

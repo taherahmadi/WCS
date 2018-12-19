@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="robotname" default="robot1"/>
+
+  <node pkg="hector_trajectory_server" type="hector_trajectory_server" name="trajectory_$(arg robotname)">
+       <param name="target_frame_name" value="/map" />
+       <param name="source_frame_name" value="/$(arg robotname)/base_link" />
+        <remap from="/trajectory" to="/$(arg robotname)/trajectory" />
+  </node>
+
+
+  <group ns="$(arg robotname)">
+
+    <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+
+      <!--rosparam file="$(find setup)/config/Valid_p3at/aux/base_local_planner_params.yaml" command="load" /-->
+      <rosparam file="$(find setup)/config/P3AT_navigation/costmap_common_params.yaml" command="load" ns="global_costmap" />
+      <rosparam file="$(find setup)/config/P3AT_navigation/costmap_common_params.yaml" command="load" ns="local_costmap" />
+      <rosparam file="$(find setup)/config/P3AT_navigation/local_costmap_params.yaml" command="load" />
+      <rosparam file="$(find setup)/config/P3AT_navigation/global_costmap_params.yaml" command="load" />
+      <rosparam file="$(find setup)/config/P3AT_navigation/local_planner_params.yaml" command="load" />
+      <remap from="/cmd_vel" to="cmd_vel"/>
+      <!--param name="move_base/DWAPlannerROS/yaw_goal_tolerance" value="0.1"/>
+      <param name="move_base/DWAPlannerROS/xy_goal_tolerance" value="0.2"/-->
+      <param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS" />
+
+      <!--param name="base_global_planner" type="string" value="navfn/NavfnROS" /-->
+      <param name="conservative_reset_dist" type="double" value="3.0" />
+      <param name="controller_frequency" type="double" value="15.0" />
+      <param name="planner_frequency" type="double" value="0.2" />
+      <!--param name="base_global_planner" type="string" value="global_planner/GlobalPlanner" />
+      <param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS"/-->
+      <rosparam>
+        NavfnROS:
+          allow_unknown: true
+          default_tolerance: 0.6
+          visualize_potential: true   # false
+
+
+      </rosparam>
+    </node>
+  </group>
+</launch>

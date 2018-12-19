@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<launch>
+
+
+
+<include file="$(find setup)/launch/p3at_spawn.launch">
+    <arg name="robotname" value="robot0"/>
+    <arg name="initialx" value="7.3"/>
+    <arg name="initialy" value="-7"/>
+  </include>
+
+
+<include file="$(find setup)/launch/p3at_spawn.launch">
+    <arg name="robotname" value="robot1"/>
+    <arg name="initialx" value="-2.23"/>
+    <arg name="initialy" value="7.97"/>
+  </include>
+
+<!--
+
+<include file="$(find setup)/launch/p3at_spawn.launch">
+    <arg name="robotname" value="robot2"/>
+    <arg name="initialx" value="-2.27"/>
+    <arg name="initialy" value="-7.4"/>
+  </include>
+
+-->
+
+
+<!--
+
+<include file="$(find setup)/launch/p3at_spawn.launch">
+    <arg name="robotname" value="robot3"/>
+    <arg name="initialx" value="-12.58"/>
+    <arg name="initialy" value="-1.93"/>
+  </include>
+
+-->
+
+
+
+
+</launch>
