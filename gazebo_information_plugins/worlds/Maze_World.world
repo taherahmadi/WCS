@@ -1,6 +1,6 @@
 <sdf version='1.6'>
   <world name='default'>
-        <plugin name='gazebo_simple_world' filename='libgazebo_simple_world.so'/>
+     <plugin name='gazebo_connection_plugin' filename='libgazebo_connection_plugin.so'/>
     <light name='sun' type='directional'>
       <cast_shadows>1</cast_shadows>
       <pose frame=''>0 0 10 0 -0 0</pose>

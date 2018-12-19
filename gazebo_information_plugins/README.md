@@ -10,6 +10,6 @@ after compiling the package make sure you add the following line to your ~/.bash
 `export GAZEBO_PLUGIN_PATH=${GAZEBO_PLUGIN_PATH}:~/"path to your catkin workspace"/devel/lib`
 
 
-also add the following line to the .world file:
-  `<plugin name='sosvr_gazebo_plugin_simple' filename='libsosvr_gazebo_plugin_simple.so'/>`
+also add the following line to the .world file inside <world></world> tags:
+  `<plugin name='gazebo_connection_plugin' filename='libgazebo_connection_plugin.so'/>`
 

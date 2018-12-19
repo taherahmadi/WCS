@@ -22,8 +22,8 @@ import rospy
 from communication_node.msg import *
 from nav_msgs.msg import *
 
-debuger_mode=False;
-information_logger=None;
+debuger_mode=False
+information_logger=None
 rate=None
 message_handlers_list=[]
 
@@ -50,12 +50,12 @@ class message_handle:
             ----------
             subscribes from /"sub_topic"+"tag"
             """
-            self.sub_topic=sub_topic;
-            self.pub_topic=pub_topic;
-            self.data_type=data_type;
-            self.tag=tag;
-            self.subscriber=rospy.Subscriber(self.sub_topic+self.tag,self.data_type, self.callback_function,queue_size=20);
-            self.message_publisher=None;
+            self.sub_topic=sub_topic
+            self.pub_topic=pub_topic
+            self.data_type=data_type
+            self.tag=tag
+            self.subscriber=rospy.Subscriber(self.sub_topic+self.tag,self.data_type, self.callback_function,queue_size=20)
+            self.message_publisher=None
 
     def callback_function(self,data):
             """this is the callback function for self.subscriber
@@ -74,16 +74,16 @@ class message_handle:
                 print("new "+self.tag+" received")
             robots_list=rospy.get_param("/robots_list")
             if ((data.source not in robots_list )or(data.destination not in robots_list) ):
-                return;
-            connection_list=[];
-            connection_list=(rospy.get_param("/connection_list_"+data.source));
-            source_index=robots_list.index(data.destination);
+                return
+            connection_list=[]
+            connection_list=(rospy.get_param("/connection_list_"+data.source))
+            source_index=robots_list.index(data.destination)
             if (connection_list[1+source_index]==1):
                        self.message_publisher = rospy.Publisher(data.destination + self.pub_topic+self.tag, self.data_type, queue_size=10)
                        i=0
                        while not ( rospy.is_shutdown() or i>1):
                                  self.message_publisher.publish(data)
-                                 print("from",data.source," to",data.destination);
+                                 print("from",data.source," to",data.destination)
                                  #print("sent messagne",self.tag)
                                  i+=1
                                  rate.sleep()
@@ -96,13 +96,13 @@ def listener():
     global information_logger
     global rate
     global debuger_mode
-    global message_handlers_list;
-    global propagation_models;
+    global message_handlers_list
+    global propagation_models
     rospy.init_node('communication_node_message_handler')
     rate=rospy.Rate(50)
-    message_list=[[Data_Goal,"Goal"],[Data_Sample,"sample"]];
+    message_list=[[Data_Goal,"Goal"],[Data_Sample,"sample"]]
     for i in range (0,len(message_list)):
-        message_handlers_list.append(message_handle(data_type=message_list[i][0],tag=message_list[i][1]));
+        message_handlers_list.append(message_handle(data_type=message_list[i][0],tag=message_list[i][1]))
     rospy.spin()
 
 
