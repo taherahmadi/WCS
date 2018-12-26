@@ -9,7 +9,7 @@ from sample_package.msg import *
 def main():
     msg = Data_Sample()
     msg.source = "robot1"
-    msg.destination = "robot2"
+    msg.destination = "robot0"
     rate = rospy.Rate(1)
     i = 0
     while not rospy.is_shutdown():

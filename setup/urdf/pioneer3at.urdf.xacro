@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+
+<robot
+  xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+  xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+  xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+  xmlns:xacro="http://ros.org/wiki/xacro"
+  name="pioneer3at">
+
+  <xacro:include filename="$(find setup)/urdf/pioneer3at_body.xacro"/>
+  <xacro:include filename="$(find setup)/urdf/hokuyo_utm30lx.urdf.xacro"/>
+  <xacro:include filename="$(find setup)/urdf/asus_camera.urdf.xacro" />
+
+  <!--xacro:include filename="$(find setup)/urdf/velodyne.urdf.xacro"/>
+<xacro:rotating_velodyne name="hokuyo" parent="base_link" ros_topic="hokuyo" update_rate="25" ray_count="360" min_angle="160" max_angle="-160" >
+    <origin xyz="0.13 0 0.32" rpy="0 0 0"/>
+  </xacro:rotating_velodyne-->
+
+ <xacro:hokuyo_utm30lx name="hokuyo" parent="base_link" ros_topic="hokuyo" update_rate="25" ray_count="720" min_angle="130" max_angle="-130" >   <!--comment raycount=1040  updaterate=30 comment-->
+    <origin xyz="0.13 0 0.32" rpy="0 0 0"/>
+  </xacro:hokuyo_utm30lx>
+
+
+
+  <xacro:asus_camera name="camera" parent="base_link">
+	                <origin xyz="0.095 0.0 0.38" rpy="0 0 0"/>
+  </xacro:asus_camera>
+
+ 
+</robot>

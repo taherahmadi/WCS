@@ -17,7 +17,7 @@
     <param name="map_merge/init_pose_yaw" value="0.0"/>
  <node pkg="communication_node" type="registration_client" name="registration_client_node" output="screen"  args="$(arg robotname)" > </node>
 
-    <param name="robot_description" command="$(find xacro)/xacro '$(find p3at_description)/urdf/pioneer3at.urdf.xacro'" />
+    <param name="robot_description" command="$(find xacro)/xacro '$(find setup)/urdf/pioneer3at.urdf.xacro'" />
 
     <param name="tf_prefix" type="string" value="$(arg robotname)"/>
 

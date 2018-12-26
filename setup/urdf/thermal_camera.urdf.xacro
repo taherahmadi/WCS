@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:property name="M_PI" value="3.1415926535897931" />
+
+  <xacro:macro name="flir_a35_camera_model" params="name parent *origin">
+    <joint name="${name}_joint" type="fixed">
+      <xacro:insert_block name="origin" />
+      <parent link="${parent}"/>
+      <child link="${name}_frame"/>
+    </joint>
+
+    <link name="${name}_frame">
+      <inertial>
+        <mass value="0.200" />
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <inertia ixx="5.8083e-4" ixy="0" ixz="0" iyy="3.0833e-5" iyz="0" izz="5.9083e-4" />
+      </inertial>
+            <visual>
+        <origin xyz="${0.106*-0.5} 0 0" rpy="0 0 0" />
+        <geometry>
+          <!--Dimensions taken from http://www.flir.com/automation/display/?id=56341-->
+          <box size="0.106 0.04 0.043" />
+        </geometry>
+        <material name="DarkGrey">
+          <color rgba="0.3 0.3 0.3 1"/>
+        </material>
+      </visual>
+      <collision>
+        <origin xyz="${0.106*-0.5} 0 0" rpy="0 0 0" />
+        <geometry>
+          <!--Dimensions taken from http://www.flir.com/automation/display/?id=56341-->
+          <box size="0.106 0.04 0.043" />
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="${name}_optical_joint" type="fixed">
+        <origin xyz="0 0 0" rpy="${-M_PI/2} 0.0 ${-M_PI/2}" />
+        <parent link="${name}_frame" />
+        <child link="${name}_optical_frame"/>
+      </joint>
+
+      <link name="${name}_optical_frame" />
+
+    <gazebo reference="${name}_frame">
+      <material>Gazebo/Grey</material>
+    </gazebo>
+
+  </xacro:macro>
+
+  <xacro:macro name="flir_a35_camera" params="name parent *origin">
+
+    <xacro:flir_a35_camera_model name="${name}" parent="${parent}">
+      <xacro:insert_block name="origin" />
+    </xacro:flir_a35_camera_model>
+
+    <gazebo reference="${name}_frame">
+      <sensor type="camera" name="thermal_camera_sensor">
+        <update_rate>10</update_rate>
+        <camera>
+          <horizontal_fov>${62.8 * M_PI/180.0}</horizontal_fov>
+          <image>
+            <format>R8G8B8</format>
+            <width>280</width>        <!--640-->
+            <height>180</height>         <!--480-->
+          </image>
+          <clip>
+            <near>0.5</near>
+            <far>19</far>
+          </clip>
+        </camera>
+
+        <plugin name="thermal_camera_controller" filename="package://hector_gazebo_thermal_camera/libgazebo_ros_thermal_camera_pink.so">
+          <alwaysOn>true</alwaysOn>
+          <updateRate>10</updateRate>
+          <imageTopicName>${name}/image</imageTopicName>
+          <cameraInfoTopicName>${name}/camera_info</cameraInfoTopicName>
+          <frameName>${name}_optical_frame</frameName>
+        </plugin>
+      </sensor>
+    </gazebo>
+  </xacro:macro>
+
+</robot>

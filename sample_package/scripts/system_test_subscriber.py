@@ -11,8 +11,8 @@ def callback(data):
     print ("new message",data.data.a,data.data.b,data.data.c)
 
 def main():
-    global a;
-    a=receive_message("robot2", Data_Sample, "sample",callback)
+    global a
+    a=receive_message("robot0", Data_Sample, "sample",callback)
 
 
 if __name__ == "__main__":
