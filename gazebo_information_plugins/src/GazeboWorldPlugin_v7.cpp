@@ -185,7 +185,7 @@ namespace gazebo {
             }
             _world = _parent;
 
-            ROS_INFO("Hello World!");
+            //ROS_INFO("Hello World!");
 
             //here we create a SDF object with a contact sensor attached to it and insert it into the world
             // to count the number of objects that this SDF object touches
@@ -241,16 +241,18 @@ namespace gazebo {
           std::string concrete="concrete",willowgarage="willowgarage",brick_wall="brick";
           if(object_name.data.length()<5){return;}
           else if (!brick_wall.compare(object_name.data.substr(0,5))){
-                    ROS_INFO("new objects %s",object_name.data.c_str());
+                    //ROS_INFO("new objects %s",object_name.data.c_str());
                   }
           else if (!concrete.compare(object_name.data.substr(0,8))){
-            ROS_INFO("new objects %s",object_name.data.c_str());}
+            //ROS_INFO("new objects %s",object_name.data.c_str());
+            }
           else if (!willowgarage.compare(object_name.data.substr(0,12))){
-            ROS_INFO("new objects %s",object_name.data.c_str());}
+            //ROS_INFO("new objects %s",object_name.data.c_str());
+            }
             else{return;}
             //object's name = (jersey)(worlds_1)(longwall)(drc_practice)(Dumpster)(room1)
             this->object_name = object_name.data;
-              ROS_INFO("new objects %s",object_name.data.c_str());
+              //ROS_INFO("new objects %s",object_name.data.c_str());
               vec.push_back(object_name.data);
             // if (vec.size() > 0 && check == 1) {
             //     for (int j = 0; j < vec.size(); j++) {

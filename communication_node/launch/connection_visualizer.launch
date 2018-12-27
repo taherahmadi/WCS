@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<launch>
+
+    <node pkg="communication_node" type="connection_visualizer.py" name="connection_visualizer" output="screen" />
+
+
+</launch>

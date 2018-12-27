@@ -100,6 +100,8 @@ def main():
         multihub()
         for i in range(0,len(connection_list)):
             rospy.set_param("/connection_list_"+connection_list[i][0],connection_list[i])
+        for i in range(0,len(direct_connection)):
+            rospy.set_param("/direct_connection_"+direct_connection[i][0],direct_connection[i])
         #print("update done")
     rospy.spin()
 
