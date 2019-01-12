@@ -1,6 +1,27 @@
 <?xml version="1.0"?>
 <launch>
 
+
+
+
+    <param name="prop_model" value="multi_wall"/> <!--   value= "multi_wall","single_wall","range_based","one_slope","full_connection"    -->
+
+    <param name="decay_factor" value="2.2"/>
+    <param name="l0" value="40"/>
+    <param name="threshold" value="93"/>
+
+    
+    <param name="max_range" value="30"/><!-- max possible range for communication in range_based model -->
+
+    <!-- for single wall model , we use light_decay param as wall decay factor for all the walls-->
+
+    <param name="light_decay" value="6"/><!-- decay factor of light walls-->
+    <param name="medium_decay" value="8"/><!-- decay factor of medium walls-->
+    <param name="heavy_decay" value="10"/><!-- decay factor of heavy walls-->
+
+
+
+
     <node pkg="communication_node" type="update_info.py" name="update_info" output="screen" />
 
 
