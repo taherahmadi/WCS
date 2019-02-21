@@ -44,6 +44,7 @@ def line_of_sight():
         for j in range(0,len(robots_list)):
             if (connection_list[i][0]==robots_list[j]):continue
             if propagation_model=="one_slope":
+                print("Debug line 4 ===>>> ",propagation_model)
                 distance = get_object_distance(robots_list[i],robots_list[j])
                 if(distance==-1 or distance==None):
                     connection_list[i][1+j]=0
@@ -58,6 +59,7 @@ def line_of_sight():
                      direct_connection[i][1+j]=0
             
             if propagation_model=="range_based":
+                print("Debug line 4 ===>>> ",propagation_model)
                 distance = get_object_distance(robots_list[i],robots_list[j])
                 if(distance==-1 or distance==None):
                     connection_list[i][1+j]=0
@@ -71,6 +73,7 @@ def line_of_sight():
                      direct_connection[i][1+j]=0
 
             elif propagation_model == "multi_wall":
+                print("Debug line 4 ===>>> ",propagation_model)
                 distance_and_walls = get_n_walls_between(robots_list[i],robots_list[j])
                 if(distance_and_walls==-1 or distance_and_walls==None):
                     connection_list[i][1+j]=0
@@ -87,10 +90,12 @@ def line_of_sight():
                     direct_connection[i][1+j]=0
 
             elif propagation_model == "full_connection":
+                print("Debug line 4 ===>>> ",propagation_model)
                 connection_list[i][1+j]=1
                 direct_connection[i][1+j]=1
             
             elif propagation_model == "single_wall":
+                print("Debug line 4 ===>>> ",propagation_model)
                 distance_and_walls = get_n_walls_between(robots_list[i],robots_list[j])
                 if(distance_and_walls==-1 or distance_and_walls==None):
                     connection_list[i][1+j]=0
@@ -134,11 +139,15 @@ def main():
     robots_list=rospy.get_param("/robots_list")
 
     prop_model=rospy.get_param("prop_model",default="multi_wall")
+    print("Debug line 1 ===>>> ",prop_model)
     model_names=["multi_wall","single_wall","range_based","one_slope","full_connection"]
     if not (prop_model in model_names):
         propagation_model="multi_wall"
+        print("Debug line 2 ===>>> mwm")
+
     else :
         propagation_model=prop_model
+        print("Debug line 3 ===>>> ",prop_model)
 
     try:
         decay_factor=float(rospy.get_param("decay_factor",default="2.2"))
